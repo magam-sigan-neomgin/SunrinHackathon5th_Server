@@ -13,7 +13,7 @@ function submit() {
       }
       else {
         signup(ID, PW);
-        window.location.href = window.location.host + "/signin";
+        window.location.href = "/signin";
       }
     });
   }
@@ -21,7 +21,7 @@ function submit() {
 
 function idValidation(id, cb) {
   $.ajax({
-    url: window.location.host + '/idcheck',
+    url: '/idcheck',
     type: 'POST',
     data: { 'id': id },
     dataType: 'json',
@@ -33,7 +33,7 @@ function idValidation(id, cb) {
 
 function signup(id, pw) {
   $.ajax({
-    url: window.location.host + '/signup',
+    url: '/signup',
     type: 'POST',
     data: { 'id': id, 'pw': pw },
     dataType: 'json'
