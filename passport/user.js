@@ -63,10 +63,7 @@ module.exports.idCheck = (id, cb) => {
     console.log(id);
     //sql error
     if (error) throw error;
-    if (!results[0]) {
-      return cb(false);
-    }
-    const length = Object.keys(results[0]).length;
+    const length = results.length;
     if (length == 1) {
       // id exists
       return cb(true);
