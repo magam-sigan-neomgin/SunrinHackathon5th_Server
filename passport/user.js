@@ -1,6 +1,10 @@
 const mysql = require('mysql');
+const bcyrpt = require('bcrypt');
 
 var exports = module.exports = {};
+const bcryptSettings = {
+  saltRounds: 10
+};
 
 const pool = mysql.createPool({
   connectionLimit: 10,
@@ -39,14 +43,22 @@ module.exports.findPw = (id, pw, cb) => {
     // sql error
     if (error) cb(error, null);
     const user = results[0];
-    if (user['pw'] == pw) {
-      // pw correct
-      cb(true, user);
-    }
-    else {
-      // pw incorrect
-      cb(false, null);
-    }
+    bcyrpt.compare(pw, user['pw'], (err, same) => {
+      if (same == true) {
+        cb(true, user);
+      }
+      else {
+        cb(false, null);
+      }
+    });
+    // if (user['pw'] == pw) {
+    //   // pw correct
+    //   cb(true, user);
+    // }
+    // else {
+    //   // pw incorrect
+    //   cb(false, null);
+    // }
   });
 };
 

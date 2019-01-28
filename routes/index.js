@@ -1,9 +1,13 @@
 const express = require('express');
 const passport = require('passport');
 const path = require('path');
+const bcyrpt = require('bcrypt');
 const Users = require('../passport/user.js')
 
 const router = express.Router();
+const bcryptSettings = {
+  saltRounds: 10
+};
 
 /* GET home page. */
 router.get('/', (req, res) => {
@@ -45,7 +49,10 @@ router.get('/signup', (req, res) => {
 });
 
 router.post('/signup', (req, res) => {
-  Users.signUp(req.body['id'], req.body['pw']);
+  bcyrpt.hash(req.body['pw'], bcryptSettings.saltRounds, (err, hash) => {
+    // id: req.body['id'], pw(hashed): hash
+    Users.signUp(req.body['id'], hash);
+  });
 });
 
 router.get('/succeeded', (req, res) => {
