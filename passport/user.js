@@ -59,8 +59,6 @@ module.exports.signUp = (id, pw) => {
 
 module.exports.idCheck = (id, cb) => {
   pool.query('SELECT id FROM user WHERE id=?', [id], (error, results, fields) => {
-    console.log(JSON.stringify(results));
-    console.log(id);
     //sql error
     if (error) throw error;
     const length = results.length;
