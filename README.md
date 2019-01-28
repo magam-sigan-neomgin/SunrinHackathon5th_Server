@@ -1,5 +1,6 @@
 # loginServer
-Express Login Server Exampled
+Express Login Server Exampled  
+Passwords Encrypted By Bcrypt
 
 # SQL
 Mariadb  
