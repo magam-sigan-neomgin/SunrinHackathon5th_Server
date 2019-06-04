@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 
 router.get('/signin', (req, res) => {
   if (req.isAuthenticated()) {
-    res.send("You are already logged in<br>" + JSON.stringify(req.user));
+    res.status(res.statusCode).json({'isAuthenticated': req.isAuthenticated(), 'id': req.user['id']});
   }
   else {
     res.sendFile('signIn.html', { root: path.join(__dirname, '../public/html') })
@@ -24,8 +24,8 @@ router.get('/signin', (req, res) => {
 });
 
 router.post('/signin', passport.authenticate('local', {
-  successRedirect: '/succeeded',
-  failureRedirect: '/failed'
+  successRedirect: '/status',
+  failureRedirect: '/status'
 }));
 
 router.get('/signout', (req, res) => {
@@ -50,17 +50,12 @@ router.get('/signup', (req, res) => {
 
 router.post('/signup', (req, res) => {
   bcyrpt.hash(req.body['pw'], bcryptSettings.saltRounds, (err, hash) => {
-    // id: req.body['id'], pw(hashed): hash
     Users.signUp(req.body['id'], hash);
   });
 });
 
-router.get('/succeeded', (req, res) => {
-  res.status(200).send("SUCCEEDED");
-});
-
-router.get('/failed', (req, res) => {
-  res.status(401).send("FAILED");
+router.get('/status', (req, res) => {
+  res.status(res.statusCode).json({'isAuthenticated': req.isAuthenticated(), 'id': req.user['id']});
 });
 
 module.exports = router;
