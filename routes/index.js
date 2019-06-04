@@ -56,11 +56,11 @@ router.post('/signup', (req, res) => {
 });
 
 router.get('/succeeded', (req, res) => {
-  res.send("SUCCEEDED");
+  res.status(200).send("SUCCEEDED");
 });
 
 router.get('/failed', (req, res) => {
-  res.send("FAILED");
+  res.status(401).send("FAILED");
 });
 
 module.exports = router;
