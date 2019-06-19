@@ -5,15 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="../javascripts/signUp.js"></script>
   <title>Document</title>
 </head>
 <body>
   <h1>Sign Up</h1>
   <hr>
-  <form id="user"> 
+  <form id="user" action="http://localhost:3000/register" method="post"> 
     id: <input type="text" name="id" id="id" required> <br>
     pw: <input type="text" name="pw" id="pw" type="password" required> <br>
+    username: <input type="text" name="username" id="username" required> <br>
+    thumbnail: <input type="file" name="thumbnail" id="thumbnail" required> <br>
     <button type="submit" id="submit">Submit</button>
   </form>
 </body>

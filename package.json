@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "aws-sdk": "^2.477.0",
     "bcrypt": "^3.0.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
@@ -15,6 +16,7 @@
     "jade": "~1.11.0",
     "jquery": "^3.4.1",
     "morgan": "~1.9.0",
+    "multer": "^1.4.1",
     "mysql": "^2.16.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0"
