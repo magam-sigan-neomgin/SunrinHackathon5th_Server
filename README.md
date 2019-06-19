@@ -1,23 +1,52 @@
-# loginServer
+# Good_Night Server  
 Express Login Server Exampled  
-Passwords Encrypted By Bcrypt
+Passwords Encrypted By Bcrypt  
 
-# SQL
-Mariadb  
-id: localhost@test  
-pw:  test  
-database: test  
-table: user (id varchar(64), pw varchar(64))  
+# API  
 
-# API 
-### / 
-> Express Main Page 
+## Register Account 
 
-### /signin 
-> Sign in page(if you already logged in, it will show your id and pw) if you success, redirect /success or redirect /failed
+**URL** `/register` 
 
-### /signout 
-> Sign out and redirect /signin 
+**Method** `POST` 
 
-### /signup 
-> Sign up if id duplicated, alert 
+**Auth required** NO 
+
+**Request body example** 
+
+```json
+{
+    "id": test1,
+    "pw": test1
+}
+``` 
+
+**Succeeded Response example** 
+
+```json
+{
+    "status": true
+}
+``` 
+
+## Login Account 
+
+**URL** `/login` 
+
+**Method** `POST` 
+
+**Auth required** NO 
+
+**Request Query example** 
+
+```
+    /login?id=test1&pw=test1
+``` 
+
+**Succeeded Response example** 
+
+```json
+{
+    "status": true
+}
+``` 

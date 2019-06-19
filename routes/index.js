@@ -85,7 +85,12 @@ router.post('/register', upload.single('profileimage'), (req, res) => {
 });
 
 router.get('/status', (req, res) => {
-  res.status(res.statusCode).json({'status': req.isAuthenticated(), 'id': req.user['id']});
+  if (req.isAuthenticated()) {
+    res.json({'status': req.isAuthenticated(), 'id': req.user['id']});
+  }
+  else {
+    res.json({'status': req.isAuthenticated(), 'message': "Authenticated failed"})
+  }
 });
 
 router.post('/writeboard', upload.single('photo'), (req, res) => {
