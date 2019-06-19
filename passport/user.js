@@ -89,8 +89,8 @@ module.exports.getLastBoardNo = (cb) => {
   });
 }
 
-module.exports.insertBoard = (no, id, title, date, bodyText) => {
-  pool.query('INSERT INTO board VALUES (?, ?, ?, ?, ?)', [no, id, title, date, bodyText]);
+module.exports.insertBoard = (no, id, title, date, bodyText, photo) => {
+  pool.query('INSERT INTO board VALUES (?, ?, ?, ?, ?, ?)', [no, id, title, date, bodyText, photo]);
 };
 
 module.exports.getBoards = (cb) => {

@@ -97,7 +97,7 @@ router.post('/writeboard', upload.single('photo'), (req, res) => {
     let bodyText = req.body['bodyText'];
     Users.getLastBoardNo((lastNo) => {
       S3.uploadBoardPhoto(lastNo + '.' + req.file.originalname.split('.').pop(), photo);
-      Users.insertBoard(lastNo, id, title, date, bodyText);
+      Users.insertBoard(lastNo, id, title, date, bodyText, lastNo + '.' + req.file.originalname.split('.').pop());
       res.json({'status': true});
     });
   }
