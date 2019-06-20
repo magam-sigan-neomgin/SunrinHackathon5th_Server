@@ -16,8 +16,10 @@ Passwords Encrypted By Bcrypt
 
 ```json
 {
-    "id": test1,
-    "pw": test1
+    "id": "testId",
+    "pw": "testPw",
+    "username": "testUserName",
+    "profileimage": multipart/form-data
 }
 ``` 
 
@@ -40,7 +42,43 @@ Passwords Encrypted By Bcrypt
 **Request Query example** 
 
 ```
-    /login?id=test1&pw=test1
+/login?id=testId&pw=testPw
+``` 
+
+**Succeeded Response example** 
+
+```json
+{
+    "status": true,
+    "id": "testId"
+}
+``` 
+
+**Failed Response example** 
+
+```json
+{
+    "status": false,
+    "message": "Authenticated failed"
+}
+``` 
+
+## Write Board 
+
+**URL** `/writeboard` 
+
+**Method** `POST` 
+
+**Auth required** YES 
+
+**Request Body example** 
+
+```json
+{
+    "title": "testTitle",
+    "bodyText": "testBodyText",
+    "photo": multipart/form-data
+}
 ``` 
 
 **Succeeded Response example** 
@@ -48,5 +86,118 @@ Passwords Encrypted By Bcrypt
 ```json
 {
     "status": true
+}
+``` 
+
+**Failed Response example** 
+
+```json
+{
+    "status": false,
+    "message": "Authenticated failed"
+}
+``` 
+
+## Get Boards 
+
+**URL** `/getboards` 
+
+**Method** `GET` 
+
+**Auth required** NO 
+
+**Succeeded Response example** 
+
+```json
+{
+    "status": true,
+    "data": [
+        {
+            "no": 2,
+            "id": "a",
+            "title": "TEST 3",
+            "create_date": "2019-06-19T23:22:33.000Z",
+            "body_text": "lorem ipsum is very long text aaaaa",
+            "photo": "2.jpg",
+            "likes": [
+                "testId", "testId2"
+            ]
+        },
+        {
+            "no": 1,
+            "id": "a",
+            "title": "TEST 3",
+            "create_date": "2019-06-19T15:52:43.000Z",
+            "body_text": "lorem ipsum is very long text aaaaa",
+            "photo": "1.jpg",
+            "likes": []
+        }
+    ]
+}
+``` 
+
+## Click Like 
+
+**URL** `/clicklike` 
+
+**Method** `POST` 
+
+**Auth required** YES 
+
+**Request Body example** 
+
+```json
+{
+    "no": "1"
+}
+``` 
+
+**Succeeded Response example** 
+
+```json
+{
+    "status": true
+}
+``` 
+
+**Failed Response example** 
+
+```json
+{
+    "status": false,
+    "message": "Authenticated failed"
+}
+``` 
+
+## Unclick Like 
+
+**URL** `/unclicklike` 
+
+**Method** `POST` 
+
+**Auth required** YES 
+
+**Request Body example** 
+
+```json
+{
+    "no": "1"
+}
+``` 
+
+**Succeeded Response example** 
+
+```json
+{
+    "status": true
+}
+``` 
+
+**Failed Response example** 
+
+```json
+{
+    "status": false,
+    "message": "Authenticated failed"
 }
 ``` 

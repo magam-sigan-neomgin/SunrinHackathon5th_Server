@@ -107,7 +107,7 @@ router.post('/writeboard', upload.single('photo'), (req, res) => {
     });
   }
   else {
-    res.json({'status': false, 'message': 'not authenticated'});
+    res.json({'status': false, 'message': 'Authenticated failed'});
   }
 });
 
@@ -138,7 +138,7 @@ router.post('/clicklike', (req, res) => {
     res.json({'status': true});
   }
   else {
-    res.json({'status': false, 'message': 'not authenticated'});
+    res.json({'status': false, 'message': 'Authenticated failed'});
   }
 });
 
@@ -150,7 +150,7 @@ router.post('/unclicklike', (req, res) => {
     res.json({'status': true});
   }
   else {
-    res.json({'status': false, 'message': 'not authenticated'});
+    res.json({'status': false, 'message': 'Authenticated failed'});
   }
 });
 
