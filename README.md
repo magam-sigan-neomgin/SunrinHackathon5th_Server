@@ -19,7 +19,7 @@ Passwords Encrypted By Bcrypt
     "id": "testId",
     "pw": "testPw",
     "username": "testUserName",
-    "profileimage": multipart/form-data
+    "profileimage": "[multipart/form-data]"
 }
 ``` 
 
@@ -77,7 +77,7 @@ Passwords Encrypted By Bcrypt
 {
     "title": "testTitle",
     "bodyText": "testBodyText",
-    "photo": multipart/form-data
+    "photo": "[multipart/form-data]"
 }
 ``` 
 
