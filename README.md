@@ -3,15 +3,15 @@
 
 # API  
 
-**BASE URL** `http://54.180.57.73:3000`
+**BASE URL** : `http://54.180.57.73:3000`
 
 ## Register Account 
 
-**URL** `/register` 
+**URL** : `/register` 
 
-**Method** `POST` 
+**Method** : `POST` 
 
-**Auth required** NO 
+**Auth required** : NO 
 
 **Request body example** 
 
@@ -34,11 +34,11 @@
 
 ## Login Account 
 
-**URL** `/login` 
+**URL** : `/login` 
 
-**Method** `POST` 
+**Method** : `POST` 
 
-**Auth required** NO 
+**Auth required** : NO 
 
 **Request Query example** 
 
@@ -66,11 +66,11 @@
 
 ## Write Board 
 
-**URL** `/writeboard` 
+**URL** : `/writeboard` 
 
-**Method** `POST` 
+**Method**  :`POST` 
 
-**Auth required** YES 
+**Auth required** : YES 
 
 **Request Body example** 
 
@@ -101,11 +101,11 @@
 
 ## Get Boards 
 
-**URL** `/getboards` 
+**URL** : `/getboards` 
 
-**Method** `GET` 
+**Method** : `GET` 
 
-**Auth required** NO 
+**Auth required** : NO 
 
 **Succeeded Response example** 
 
@@ -137,13 +137,15 @@
 }
 ``` 
 
+> photo는 https://good-night-board-image-bucket.s3.ap-northeast-2.amazonaws.com/ 뒤에 붙인다. 
+
 ## Click Like 
 
-**URL** `/clicklike` 
+**URL** : `/clicklike` 
 
-**Method** `POST` 
+**Method** : `POST` 
 
-**Auth required** YES 
+**Auth required** : YES 
 
 **Request Body example** 
 
@@ -172,11 +174,11 @@
 
 ## Unclick Like 
 
-**URL** `/unclicklike` 
+**URL** : `/unclicklike` 
 
-**Method** `POST` 
+**Method** : `POST` 
 
-**Auth required** YES 
+**Auth required** : YES 
 
 **Request Body example** 
 
