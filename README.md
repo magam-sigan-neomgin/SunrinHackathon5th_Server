@@ -1,8 +1,9 @@
 # Good_Night Server  
-Express Login Server Exampled  
-Passwords Encrypted By Bcrypt  
+
 
 # API  
+
+**BASE URL** `http://54.180.57.73:3000`
 
 ## Register Account 
 
