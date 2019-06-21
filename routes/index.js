@@ -5,6 +5,7 @@ const bcyrpt = require('bcrypt');
 const multer  = require('multer')
 const Users = require('../passport/user.js')
 const S3 = require('../s3/s3.js');
+const Youtube = require('../google/youtube.js')
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 const router = express.Router();
@@ -154,4 +155,19 @@ router.post('/unclicklike', (req, res) => {
   }
 });
 
+router.get('/getasmr', (req, res) => {
+  if (req.query['token']) {
+    Youtube.getAsmrWithToken(req.query['token']).then((bodyObject) => {
+      res.json({'status': true, 'data': bodyObject});
+    });
+  }
+  else if (req.query['page']) {
+    Youtube.getAsmrWithPage(req.query['page']).then((bodyObject) => {
+      res.json({'status': true, 'data': bodyObject});
+    })
+  }
+  else {
+    res.json({'status': false, 'message': 'Token and page both not found'});
+  }
+});
 module.exports = router;

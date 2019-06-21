@@ -204,3 +204,59 @@
     "message": "Authenticated failed"
 }
 ``` 
+
+## Get Youtube Asmr 
+
+**URL** : `/getasmr` 
+
+**Method** : `GET` 
+
+**Auth required** : NO 
+
+**Request Body example** 
+
+Get Youtube Asmr With Page
+
+```json
+{
+    "page": 1
+}
+``` 
+
+> Page로 요청할때 page값으로 큰 값을 주지 말것. 페이지수가 큰 페이지를 받을때는 토큰으로 받자.
+
+Get Youtube Asmr With Token 
+
+```json
+{
+    "token": "CAoQAA"
+}
+``` 
+
+**Succeeded Response example** 
+
+```json
+{
+    "status": true,
+    "data": {
+        "kind": "youtube#searchListResponse",
+        "etag": "etag",
+        "nextPageToken": "string",
+        "prevPageToken": "string",
+        "pageInfo": {
+        "totalResults": "integer",
+        "resultsPerPage": "integer"
+        },
+         "items": ["search Resource"]
+    }
+}
+``` 
+
+**Failed Response example** 
+
+```json
+{
+    "status": false,
+    "message": "Token and page both not found"
+}
+``` 
