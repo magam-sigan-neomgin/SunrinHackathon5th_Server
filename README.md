@@ -144,7 +144,7 @@ getuser?id=testid
 
 **Method**  :`POST` 
 
-**Auth required** : YES 
+**Auth required** : NO 
 
 **Request Body example** 
 
