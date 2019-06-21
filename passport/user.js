@@ -123,6 +123,6 @@ module.exports.getUser = (id, cb) => {
   pool.query('SELECT username, photo FROM user WHERE id = ?', [id], (error, results, fields) => {
     // sql error
     if (error) throw error;
-    cb(results);
+    cb(results[0]);
   });
 }
