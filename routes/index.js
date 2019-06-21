@@ -192,6 +192,7 @@ router.get('/getwhitenoise', (req, res) => {
 
 router.get('/getuser', (req, res) => {
   Users.getUser(req.query['id'], (results) => {
+    console.log(results);
     res.json({'status': req.isAuthenticated(), 'id': req.query['id'], 'username': results['username'], 'photo': results['photo']});
   })
 });
