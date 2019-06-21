@@ -89,12 +89,52 @@
 
 > photo는 https://good-night-image-bucket.s3.ap-northeast-2.amazonaws.com/ 뒤에 붙인다. 
 
+
+
 **Failed Response example** 
 
 ```json
 {
     "status": false,
     "message": "Authenticated failed"
+}
+``` 
+
+# Get User 
+
+**URL** : `/getuser` 
+
+**Method** : `GET` 
+
+**Auth required** : YES 
+
+**Request Query example** 
+
+```
+getuser?id=testid
+``` 
+
+**Succeeded Response example** 
+
+```json
+{
+    "status": true,
+    "id": "testId",
+    "username": "testUserName",
+    "photo": "testPhoto.jpg"
+}
+``` 
+
+> photo는 https://good-night-image-bucket.s3.ap-northeast-2.amazonaws.com/ 뒤에 붙인다. 
+
+
+
+**Failed Response example** 
+
+```json
+{
+    "status": false,
+    "message": "Cant find user"
 }
 ``` 
 
