@@ -170,4 +170,21 @@ router.get('/getasmr', (req, res) => {
     res.json({'status': false, 'message': 'Token and page both not found'});
   }
 });
+
+router.get('/getwhitenoise', (req, res) => {
+  if (req.query['token']) {
+    Youtube.getWhiteNoiseWithToken(req.query['token']).then((bodyObject) => {
+      res.json({'status': true, 'data': bodyObject});
+    });
+  }
+  else if (req.query['page']) {
+    Youtube.getWhiteNoiseWithPage(req.query['page']).then((bodyObject) => {
+      res.json({'status': true, 'data': bodyObject});
+    })
+  }
+  else {
+    res.json({'status': false, 'message': 'Token and page both not found'});
+  }
+});
+
 module.exports = router;

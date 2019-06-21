@@ -5,8 +5,8 @@ var exports = module.exports = {};
 
 module.exports.getAsmrWithPage = (page) => {
     return new Promise((resolve, reject) => {
-        getAsmr(page, 1, null).then((body) => {
-            resolve(body);
+        getAsmr(page, 1, null).then((bodyObject) => {
+            resolve(bodyObject);
         })
     })
 }
@@ -18,6 +18,21 @@ module.exports.getAsmrWithToken = (token) => {
         });
     });
 }
+module.exports.getWhiteNoiseWithPage = (page) => {
+    return new Promise((resolve, reject) => {
+        getWhiteNoise(page, 1, null).then((bodyObject) => {
+            resolve(bodyObject);
+        })
+    })
+}
+module.exports.getWhiteNoiseWithToken = (token) => {
+    return new Promise((resolve, reject) => {
+        let options = {uri: 'https://www.googleapis.com/youtube/v3/search', qs: {key: GOOGLE_API.key, part: 'snippet', q: 'white noise', pageToken: token}};
+        request(options, (error, response, body) => {
+            resolve(JSON.parse(body));
+        });
+    })
+}
 
 function getAsmr(maxPage, nowPage, nextToken) {
     return new Promise((resolve, reject) => {
@@ -27,6 +42,28 @@ function getAsmr(maxPage, nowPage, nextToken) {
         }
         else {
             options = {uri: 'https://www.googleapis.com/youtube/v3/search', qs: {key: GOOGLE_API.key, part: 'snippet', q: 'asmr', pageToken: nextToken}};
+        }
+        request(options, (error, response, body) => {
+            let bodyObject = JSON.parse(body);
+            if (nowPage == maxPage) {
+                resolve(bodyObject);
+            }
+            else {
+                nextToken = bodyObject['nextPageToken'];
+                getAsmr(maxPage, nowPage + 1, nextToken).then((thenBodyObject) => { resolve(thenBodyObject); });
+            }
+        });
+    })
+}
+
+function getWhiteNoise(maxPage, nowPage, nextToken) {
+    return new Promise((resolve, reject) => {
+        let options;
+        if (nowPage == 1) {
+            options = {uri: 'https://www.googleapis.com/youtube/v3/search', qs: {key: GOOGLE_API.key, part: 'snippet', q: 'white noise'}};
+        }
+        else {
+            options = {uri: 'https://www.googleapis.com/youtube/v3/search', qs: {key: GOOGLE_API.key, part: 'snippet', q: 'white noise', pageToken: nextToken}};
         }
         request(options, (error, response, body) => {
             let bodyObject = JSON.parse(body);
