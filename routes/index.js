@@ -89,7 +89,7 @@ router.post('/register', upload.single('profileimage'), (req, res) => {
 router.get('/status', (req, res) => {
   if (req.isAuthenticated()) {
     Users.getUser(req.user['id'], (results) => {
-      res.json({'status': req.isAuthenticated(), 'id': req.user['id'], 'data': results});
+      res.json({'status': req.isAuthenticated(), 'id': req.user['id'], 'username': results['username'], 'photo': results['photo']});
     });
   }
   else {
