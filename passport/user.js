@@ -118,3 +118,11 @@ module.exports.clickLike = (no, id) => {
 module.exports.unClickLike = (no, id) => {
   pool.query('DELETE FROM board_like WHERE no = ? AND id = ?', [no, id]);
 }
+
+module.exports.getUser = (id, cb) => {
+  pool.query('SELECT username, photo FROM user WHERE id = ?', [id], (error, results, fields) => {
+    // sql error
+    if (error) throw error;
+    cb(results);
+  });
+}

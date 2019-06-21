@@ -88,7 +88,9 @@ router.post('/register', upload.single('profileimage'), (req, res) => {
 
 router.get('/status', (req, res) => {
   if (req.isAuthenticated()) {
-    res.json({'status': req.isAuthenticated(), 'id': req.user['id']});
+    Users.getUser(req.user['id'], (results) => {
+      res.json({'status': req.isAuthenticated(), 'id': req.user['id'], 'data': results});
+    });
   }
   else {
     res.json({'status': req.isAuthenticated(), 'message': "Authenticated failed"})
