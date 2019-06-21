@@ -51,8 +51,8 @@ module.exports.findPw = (id, pw, cb) => {
   });
 };
 
-module.exports.signUp = (id, pw, userName, cb) => {
-  pool.query('INSERT INTO user VALUES (?, ?, ?)', [id, pw, userName], (error, results, fields) => {
+module.exports.signUp = (id, pw, userName, photoName, cb) => {
+  pool.query('INSERT INTO user VALUES (?, ?, ?, ?)', [id, pw, userName, photoName], (error, results, fields) => {
     // sql error
     if (error) throw error;
     cb();

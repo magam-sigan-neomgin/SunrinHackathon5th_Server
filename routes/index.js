@@ -77,9 +77,10 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', upload.single('profileimage'), (req, res) => {
-  S3.upload(req.body['id'] + '.' + req.file.originalname.split('.').pop(), req.file['buffer']);
+  let photoName = req.body['id'] + '.' + req.file.originalname.split('.').pop();
+  S3.upload(photoName, req.file['buffer']);
   bcyrpt.hash(req.body['pw'], bcryptSettings.saltRounds, (err, hash) => {
-    Users.signUp(req.body['id'], hash, req.body['username'], () => {
+    Users.signUp(req.body['id'], hash, req.body['username'], photoName, () => {
       res.json({'status': true});
     });
   });
