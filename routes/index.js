@@ -84,4 +84,16 @@ router.get('/board', (req, res) => {
   });
 });
 
+router.post('/board/add', (req, res) => {
+  if (req.isAuthenticated()) {
+    Users.getLastBoardNo((id) => {
+      Users.addBoard(id, req.body['content'], req.body['photo'], req.body['like']);
+      res.json({'status': true});
+    });
+  }
+  else {
+    res.json({'status': false, 'message': 'Authenticated failed'});
+  }
+});
+
 module.exports = router;

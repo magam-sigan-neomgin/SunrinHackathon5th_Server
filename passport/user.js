@@ -76,12 +76,12 @@ module.exports.idCheck = (id, cb) => {
 }
 
 module.exports.getLastBoardNo = (cb) => {
-  pool.query('SELECT no FROM board ORDER BY no DESC LIMIT 1', (error, results, fields) => {
+  pool.query('SELECT id FROM board ORDER BY id DESC LIMIT 1', (error, results, fields) => {
     // sql error
     if (error) throw error;
     const length = results.length;
     if (length > 0) {
-      cb(results[0]['no'] + 1);
+      cb(results[0]['id'] + 1);
     }
     else {
       cb(1);
@@ -115,4 +115,7 @@ module.exports.getBoard = (cb) => {
     if (error) throw error;
     cb(results);
   });
+}
+module.exports.addBoard = (id, content, photo, like) => {
+  pool.query('INSERT INTO board VALUES (?, ?, ?, ?)', [id, content, photo, like]);
 }

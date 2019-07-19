@@ -129,3 +129,39 @@
     ]
 }
 ``` 
+
+## Add Board 
+
+**URL** : `/board/add` 
+
+**Method** : `POST` 
+
+**Auth required** : YES 
+
+**Request body example** 
+
+```json
+{
+    "content": "testContent",
+    "photo": "testPhoto",
+    "like": "testLike"
+}
+``` 
+
+**Succeeded Response example** 
+
+```json
+{
+    "status": true
+}
+``` 
+
+
+**Failed Response example** 
+
+```json
+{
+    "status": false,
+    "message": "Authenticated failed"
+}
+``` 
