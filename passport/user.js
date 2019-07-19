@@ -96,3 +96,16 @@ module.exports.getUser = (id, cb) => {
     cb(results[0]);
   });
 }
+
+module.exports.findIdById = (id, cb) => {
+  pool.query('SELECT id FROM user WHERE id = ?', [id], (error, results, fields) => {
+    if (error) throw error;
+    cb(results);
+  })
+};
+module.exports.findIdByUserName = (userName, cb) => {
+  pool.query('SELECT id FROM user WHERE username = ?', [userName], (error, results, fields) => {
+    if (error) throw error;
+    cb(results);
+  })
+};
