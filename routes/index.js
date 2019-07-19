@@ -73,10 +73,12 @@ router.get('/board', (req, res) => {
   });
 });
 
-router.post('/board/add', (req, res) => {
+router.post('/board/add', upload.single('boardimage'), (req, res) => {
   if (req.isAuthenticated()) {
     Users.getLastBoardNo((id) => {
-      Users.addBoard(id, req.body['content'], req.body['photo'], req.body['like']);
+      let photoName = id + '.' + req.file.originalname.split('.').pop();
+      S3.uploadBoardPhoto(photoName, req.file['buffer']);
+      Users.addBoard(id, req.body['content'], photoName, 0);
       res.json({'status': true});
     });
   }

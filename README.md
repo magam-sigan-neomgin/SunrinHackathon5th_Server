@@ -131,6 +131,8 @@
 }
 ``` 
 
+> photo는 https://good-night-board-image-bucket.s3.ap-northeast-2.amazonaws.com/ 뒤에 붙인다. 
+
 ## Add Board 
 
 **URL** : `/board/add` 
@@ -144,8 +146,7 @@
 ```json
 {
     "content": "testContent",
-    "photo": "testPhoto",
-    "like": "testLike"
+    "boardimage": "[multipart/formdata]"
 }
 ``` 
 

@@ -117,5 +117,9 @@ module.exports.getBoard = (cb) => {
   });
 }
 module.exports.addBoard = (id, content, photo, like) => {
-  pool.query('INSERT INTO board VALUES (?, ?, ?, ?)', [id, content, photo, like]);
+  pool.query('INSERT INTO board VALUES (?, ?, ?, ?)', [id, content, photo, like], (error, results, fields) => {
+    if (error) throw error;
+    console.log(results);
+    console.log(fields);
+  });
 }
