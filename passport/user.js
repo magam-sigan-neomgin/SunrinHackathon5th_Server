@@ -145,3 +145,14 @@ module.exports.getBoardById = (author)  => {
 module.exports.updateShare = (id) => {
   pool.query('UPDATE board SET is_shared = 1 WHERE id = ?', [id]);
 }
+module.exports.addComment = (id, comment, author) => {
+  pool.query('INSERT INTO board_comment VALUES (?, ?, ?)', [id, comment, author]);
+}
+module.exports.getComment = (id) => {
+  return new Promise((resolve, reject) => {
+    pool.query('SELECT * FROM board_comment WHERE id = ?', [id], (error, results, fields) => {
+      if (error) throw error;
+      resolve(results);
+    });
+  });
+}

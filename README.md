@@ -261,3 +261,38 @@
     "status": true
 }
 ``` 
+
+## Add Comment 
+
+**URL** : `/board/comment` 
+
+**Method** : `POST` 
+
+**Auth required** : YES 
+
+**Request body example** 
+
+```json
+{
+    "id": "1",
+    "comment": "TestComment"
+
+}
+``` 
+
+**Succeeded Response example** 
+
+```json
+{
+    "status": true
+}
+``` 
+
+**Failed Response example** 
+
+```json
+{
+    "status": false,
+    "message": "Authenticated failed"
+}
+``` 

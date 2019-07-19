@@ -70,6 +70,7 @@ router.get('/status', (req, res) => {
 router.get('/board', (req, res) => {
   let promiseArr1 = [];
   let promiseArr2 = [];
+  let promiseArr3 = [];
   Users.getBoard((results) => {
     results = results.filter((value) => {
       return value['is_shared'];
@@ -77,6 +78,7 @@ router.get('/board', (req, res) => {
     results.map((value) => {
       promiseArr1.push(Users.getLike(value['id']));
       promiseArr2.push(Youtube.getVideoByEmotion(value['emotion']));
+      promiseArr3.push(Users.getComment(value['id']));
       return value;
     });
     Promise.all(promiseArr1).then((values) => {
@@ -87,7 +89,12 @@ router.get('/board', (req, res) => {
         values2.forEach((value2, index2) => {
           results[index2]['suggest'] = value2;
         });
-        res.json({'status': true, 'board': results});
+        Promise.all(promiseArr3).then((values3) => {
+          values3.forEach((value3, index3) => {
+            results[index3]['comments'] = value3;
+          });
+          res.json({'status': true, 'board': results});
+        });
       });
     });
   });
@@ -110,7 +117,12 @@ router.get('/board/my', (req, res) => {
           values2.forEach((value2, index2) => {
             results[index2]['suggest'] = value2;
           });
-          res.json({'status': true, 'board': results});
+          Promise.all(promiseArr3).then((values3) => {
+            values3.forEach((value3, index3) => {
+              results[index3]['comments'] = value3;
+            });
+            res.json({'status': true, 'board': results});
+          });
         });
       });
     })
@@ -143,10 +155,18 @@ router.post('/board/like', (req, res) => {
     res.json({'status': false, 'message': 'Authenticated failed'});
   }
 });
-
 router.post('/board/share', (req, res) => {
   Users.updateShare(req.body['id']);
   res.json({'status': true});
+});
+router.post('/board/comment', (req, res) => {
+  if (req.isAuthenticated()) {
+    Users.addComment(req.body['id'], req.body['comment'], req.user.username);
+    res.json({'status': true});
+  }
+  else {
+    res.json({'status': false, 'message': 'Authenticated failed'});
+  }
 });
 
 module.exports = router;

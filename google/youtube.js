@@ -8,6 +8,7 @@ module.exports.getVideoByEmotion = (emotion) => {
         if (emotion == 'sad') {
             let options = { uri: 'https://www.googleapis.com/youtube/v3/search', qs: {key: GOOGLE_API.key, part: 'snippet', q: '슬픈노래'} };
             request(options, (error, response, body) => {
+                if (error) throw error;
                 resolve(JSON.parse(body));
             });
         }
