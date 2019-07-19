@@ -12,6 +12,20 @@ module.exports.getVideoByEmotion = (emotion) => {
                 resolve(JSON.parse(body));
             });
         }
+        else if (emotion == 'happy') {
+            let options = { uri: 'https://www.googleapis.com/youtube/v3/search', qs: {key: GOOGLE_API.key, part: 'snippet', q: '행복한노래'} };
+            request(options, (error, response, body) => {
+                if (error) throw error;
+                resolve(JSON.parse(body));
+            });
+        }
+        else if (emotion == 'soso') {
+            let options = { uri: 'https://www.googleapis.com/youtube/v3/search', qs: {key: GOOGLE_API.key, part: 'snippet', q: '평범한노래'} };
+            request(options, (error, response, body) => {
+                if (error) throw error;
+                resolve(JSON.parse(body));
+            });
+        }
     });
 }
 
