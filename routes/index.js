@@ -112,18 +112,14 @@ router.get('/board/my', (req, res) => {
         return value;
       });
       Promise.all(promiseArr1).then((values) => {
-        console.log("PROMISE1")
         values.forEach((value, index) => {
           results[index]['likes'] = value;
         });
         Promise.all(promiseArr2).then((values2) => {
-          console.log("PROMISE2")
           values2.forEach((value2, index2) => {
             results[index2]['suggest'] = value2;
           });
-          res.json({'status': true, 'board': results});
           Promise.all(promiseArr3).then((values3) => {
-            console.log("PROMISE3")
             values3.forEach((value3, index3) => {
               results[index3]['comments'] = value3;
             });
