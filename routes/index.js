@@ -104,7 +104,7 @@ router.get('/board/my', (req, res) => {
     let promiseArr1 = [];
     let promiseArr2 = [];
     let promiseArr3 = [];
-    Users.getBoardById(req.user.id).then((results) => {
+    Users.getBoardById(req.user.username).then((results) => {
       results.map((value) => {
         promiseArr1.push(Users.getLike(value['id']));
         promiseArr2.push(Youtube.getVideoByEmotion(value['emotion']));
@@ -142,7 +142,7 @@ router.post('/board/add', upload.single('photo'), (req, res) => {
       let date = new Date();
       date.setHours(date.getHours() + 9);
       date = date.toISOString().slice(0, 19).replace('T', ' ');
-      Users.addBoard(id, req.body['title'], req.body['content'], photoName, req.body['emotion'], req.user.id, date);
+      Users.addBoard(id, req.body['title'], req.body['content'], photoName, req.body['emotion'], req.user.username, date);
       res.json({'status': true});
     });
   }
@@ -153,7 +153,7 @@ router.post('/board/add', upload.single('photo'), (req, res) => {
 
 router.post('/board/like', (req, res) => {
   if (req.isAuthenticated()) {
-    Users.addLike(req.body['id'], req.user.id);
+    Users.addLike(req.body['id'], req.user.username);
     res.json({'status': true});
   }
   else {
@@ -166,7 +166,7 @@ router.post('/board/share', (req, res) => {
 });
 router.post('/board/comment', (req, res) => {
   if (req.isAuthenticated()) {
-    Users.addComment(req.body['id'], req.body['comment'], req.user.id);
+    Users.addComment(req.body['id'], req.body['comment'], req.user.username);
     res.json({'status': true});
   }
   else {
@@ -175,7 +175,7 @@ router.post('/board/comment', (req, res) => {
 });
 router.get('/profile', (req, res) => {
   if (req.isAuthenticated()) {
-    Users.getUserById(req.user.id, ((result) => {
+    Users.getUserById(req.user.username, ((result) => {
       res.json({'status': true, 'profile': result});
     }));
   }
@@ -185,7 +185,7 @@ router.get('/profile', (req, res) => {
 });
 router.get('/board/unlike', (req, res) => {
   if (req.isAuthenticated()) {
-    Users.addUnlike(req.query['id'], req.user.id);
+    Users.addUnlike(req.query['id'], req.user.username);
     res.json({'status': true});
   }
   else {
