@@ -120,6 +120,7 @@
             "title": "testTitle",
             "content": "test content",
             "photo": "testPhoto.jpg",
+            "author": "UserA",
             "likes": [
                 {
                     "id": 1,
@@ -167,6 +168,57 @@
 ```json
 {
     "status": true
+}
+``` 
+
+
+**Failed Response example** 
+
+```json
+{
+    "status": false,
+    "message": "Authenticated failed"
+}
+``` 
+
+## Get My Board 
+
+**URL** : `/board/my` 
+
+**Method** : `GET` 
+
+**Auth required** : YES 
+
+**Succeeded Response example** 
+
+```json
+{
+    "status": true,
+    "board": [
+        {
+            "id": 1,
+            "title": "testTitle",
+            "content": "test content",
+            "photo": "testPhoto.jpg",
+            "author": "UserA",
+            "likes": [
+                {
+                    "id": 1,
+                    "user_id": "testId"
+                },
+                {
+                    "id": 2,
+                    "user_id": "testId2"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "content": "test content2",
+            "photo": "testPhoto2.png",
+            "likes": []
+        }
+    ]
 }
 ``` 
 

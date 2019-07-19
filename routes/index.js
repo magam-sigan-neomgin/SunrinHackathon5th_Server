@@ -88,7 +88,7 @@ router.post('/board/add', upload.single('photo'), (req, res) => {
     Users.getLastBoardNo((id) => {
       let photoName = id + '.' + req.file.originalname.split('.').pop();
       S3.uploadBoardPhoto(photoName, req.file['buffer']);
-      Users.addBoard(id, req.body['title'], req.body['content'], photoName, req.body['emotion']);
+      Users.addBoard(id, req.body['title'], req.body['content'], photoName, req.body['emotion'], req.user.username);
       res.json({'status': true});
     });
   }
@@ -107,20 +107,24 @@ router.post('/board/like', (req, res) => {
   }
 });
 
-router.get('/song/suggest', (req, res) => {
-  if (req.query['mood'] == '슬퍼요') {
-    Youtube.getSadVideos().then((result) => {
-      res.json(result);
-    });
+router.get('/board/my', (req, res) => {
+  if (req.isAuthenticated()) {
+    let promiseArr = [];
+    Users.getBoardById(req.user.username).then((results) => {
+      results.map((value) => {
+        promiseArr.push(Users.getLike(value['id']));
+        return value;
+      });
+      Promise.all(promiseArr).then((values) => {
+        values.forEach((value, index) => {
+          results[index]['likes'] = value;
+        });
+        res.json({'status': true, 'board': results});
+      });
+    })
   }
-  else if (req.query['mood'] == '짜증나요') {
-
-  }
-  else if (req.query['mood'] == '기뻐요') {
-    
-  }
-  else if (req.query['mood'] == '재밌어요') {
-    
+  else {
+    res.json({'status': false, 'message': 'Authenticated failed'});
   }
 });
 

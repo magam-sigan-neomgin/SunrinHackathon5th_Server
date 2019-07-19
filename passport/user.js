@@ -116,8 +116,8 @@ module.exports.getBoard = (cb) => {
     cb(results);
   });
 }
-module.exports.addBoard = (id, title, content, photo, emotion) => {
-  pool.query('INSERT INTO board VALUES (?, ?, ?, ?, ?)', [id, title, content, photo, emotion], (error, results, fields) => {
+module.exports.addBoard = (id, title, content, photo, emotion, author) => {
+  pool.query('INSERT INTO board VALUES (?, ?, ?, ?, ?, ?)', [id, title, content, photo, emotion, author], (error, results, fields) => {
     if (error) throw error;
   });
 }
@@ -134,3 +134,11 @@ module.exports.getLike = (id) => {
     });
   });
 };
+module.exports.getBoardById = (author)  => {
+  return new Promise((resolve, reject) => {
+    pool.query('SELECT * FROM board WHERE author = ?', [author], (error, results, fields) => {
+      if (error) throw error;
+      resolve(results);
+    })
+  });
+}
