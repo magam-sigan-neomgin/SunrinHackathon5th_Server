@@ -377,6 +377,39 @@
 }
 ``` 
 
+## Like 
+
+**URL** : `/board/like` 
+
+**Method** : `GET` 
+
+**Auth required** : YES 
+
+**Request body example** 
+
+```json
+{
+    "id": "1"
+}
+``` 
+
+**Succeeded Response example** 
+
+```json
+{
+    "status": true
+}
+``` 
+
+**Failed Response example** 
+
+```json
+{
+    "status": false,
+    "message": "Authenticated failed"
+}
+``` 
+
 ## Unlike 
 
 **URL** : `/board/unlike` 
