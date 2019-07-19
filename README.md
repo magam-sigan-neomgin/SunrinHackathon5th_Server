@@ -99,3 +99,33 @@
     "message": "Authenticated failed"
 }
 ``` 
+
+## Get Board 
+
+**URL** : `/board` 
+
+**Method** : `GET` 
+
+**Auth required** : NO 
+
+**Succeeded Response example** 
+
+```json
+{
+    "status": true,
+    "board": [
+        {
+            "id": 1,
+            "content": "test content",
+            "photo": "testPhoto",
+            "likes": 1
+        },
+        {
+            "id": 2,
+            "content": "test content2",
+            "photo": "testPhoto2",
+            "likes": 2
+        }
+    ]
+}
+``` 

@@ -109,3 +109,10 @@ module.exports.findIdByUserName = (userName, cb) => {
     cb(results);
   })
 };
+
+module.exports.getBoard = (cb) => {
+  pool.query('SELECT * FROM board', (error, results, fields) => {
+    if (error) throw error;
+    cb(results);
+  });
+}

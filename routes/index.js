@@ -78,4 +78,10 @@ router.get('/status', (req, res) => {
   }
 });
 
+router.get('/board', (req, res) => {
+  Users.getBoard((results) => {
+    res.json({'status': true, 'board': results});
+  });
+});
+
 module.exports = router;
