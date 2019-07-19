@@ -157,7 +157,8 @@
 {
     "title": "testTitle",
     "content": "testContent",
-    "photo": "[multipart/formdata]"
+    "photo": "[multipart/formdata]",
+    "emotion": "sad"
 }
 ``` 
 
