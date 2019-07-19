@@ -103,10 +103,12 @@ router.get('/board/my', (req, res) => {
   if (req.isAuthenticated()) {
     let promiseArr1 = [];
     let promiseArr2 = [];
+    let promiseArr3 = [];
     Users.getBoardById(req.user.username).then((results) => {
       results.map((value) => {
         promiseArr1.push(Users.getLike(value['id']));
         promiseArr2.push(Youtube.getVideoByEmotion(value['emotion']));
+        promiseArr3.push(Users.getComment(value['id']));
         return value;
       });
       Promise.all(promiseArr1).then((values) => {
