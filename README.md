@@ -130,13 +130,15 @@
                     "id": 2,
                     "user_id": "testId2"
                 }
-            ]
+            ],
+            "suggest": {"youtube api"}
         },
         {
             "id": 2,
             "content": "test content2",
             "photo": "testPhoto2.png",
-            "likes": []
+            "likes": [],
+            "suggest": {"youtube api"}
         }
     ]
 }
@@ -159,7 +161,7 @@
     "title": "testTitle",
     "content": "testContent",
     "photo": "[multipart/formdata]",
-    "emotion": "sad"
+    "emotion": "[슬퍼요/...]"
 }
 ``` 
 
@@ -210,13 +212,15 @@
                     "id": 2,
                     "user_id": "testId2"
                 }
-            ]
+            ],
+            "suggest": {"youtube api"}
         },
         {
             "id": 2,
             "content": "test content2",
             "photo": "testPhoto2.png",
-            "likes": []
+            "likes": [],
+            "suggest": {"youtube api"}
         }
     ]
 }

@@ -3,12 +3,14 @@ const GOOGLE_API = require('./google.json')
 
 var exports = module.exports = {};
 
-module.exports.getSadVideos = () => {
+module.exports.getVideoByEmotion = (emotion) => {
     return new Promise((resolve, reject) => {
-        let options = { uri: 'https://www.googleapis.com/youtube/v3/search', qs: {key: GOOGLE_API.key, part: 'snippet', q: '슬픈노래'} };
-        request(options, (error, response, body) => {
-            resolve(JSON.parse(body));
-        });
+        if (emotion == '슬퍼요') {
+            let options = { uri: 'https://www.googleapis.com/youtube/v3/search', qs: {key: GOOGLE_API.key, part: 'snippet', q: '슬픈노래'} };
+            request(options, (error, response, body) => {
+                resolve(JSON.parse(body));
+            });
+        }
     });
 }
 

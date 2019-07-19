@@ -68,19 +68,53 @@ router.get('/status', (req, res) => {
 });
 
 router.get('/board', (req, res) => {
-  let promiseArr = [];
+  let promiseArr1 = [];
+  let promiseArr2 = [];
   Users.getBoard((results) => {
     results.map((value) => {
-      promiseArr.push(Users.getLike(value['id']));
+      promiseArr1.push(Users.getLike(value['id']));
+      promiseArr2.push(Youtube.getVideoByEmotion(value['emotion']));
       return value;
     });
-    Promise.all(promiseArr).then((values) => {
+    Promise.all(promiseArr1).then((values) => {
       values.forEach((value, index) => {
         results[index]['likes'] = value;
       });
-      res.json({'status': true, 'board': results});
+      Promise.all(promiseArr2).then((values2) => {
+        values2.forEach((value2, index2) => {
+          results[index2]['suggest'] = value2;
+        });
+        res.json({'status': true, 'board': results});
+      });
     });
   });
+});
+router.get('/board/my', (req, res) => {
+  if (req.isAuthenticated()) {
+    let promiseArr1 = [];
+    let promiseArr2 = [];
+    Users.getBoardById(req.user.username).then((results) => {
+      results.map((value) => {
+        promiseArr1.push(Users.getLike(value['id']));
+        promiseArr2.push(Youtube.getVideoByEmotion(value['emotion']));
+        return value;
+      });
+      Promise.all(promiseArr1).then((values) => {
+        values.forEach((value, index) => {
+          results[index]['likes'] = value;
+        });
+        Promise.all(promiseArr2).then((values2) => {
+          values2.forEach((value2, index2) => {
+            results[index2]['suggest'] = value2;
+          });
+          res.json({'status': true, 'board': results});
+        });
+      });
+    })
+  }
+  else {
+    res.json({'status': false, 'message': 'Authenticated failed'});
+  }
 });
 
 router.post('/board/add', upload.single('photo'), (req, res) => {
@@ -101,27 +135,6 @@ router.post('/board/like', (req, res) => {
   if (req.isAuthenticated()) {
     Users.addLike(req.body['id'], req.user.username);
     res.json({'status': true});
-  }
-  else {
-    res.json({'status': false, 'message': 'Authenticated failed'});
-  }
-});
-
-router.get('/board/my', (req, res) => {
-  if (req.isAuthenticated()) {
-    let promiseArr = [];
-    Users.getBoardById(req.user.username).then((results) => {
-      results.map((value) => {
-        promiseArr.push(Users.getLike(value['id']));
-        return value;
-      });
-      Promise.all(promiseArr).then((values) => {
-        values.forEach((value, index) => {
-          results[index]['likes'] = value;
-        });
-        res.json({'status': true, 'board': results});
-      });
-    })
   }
   else {
     res.json({'status': false, 'message': 'Authenticated failed'});
