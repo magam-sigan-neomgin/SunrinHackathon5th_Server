@@ -183,5 +183,14 @@ router.get('/profile', (req, res) => {
     res.json({'status': false, 'message': 'Authenticated failed'});
   }
 });
+router.get('/board/unlike', (req, res) => {
+  if (req.isAuthenticated()) {
+    Users.addUnlike(req.query['id'], req.user.id);
+    res.json({'status': true});
+  }
+  else {
+    res.json({'status': false, 'message': 'Authenticated failed'});
+  }
+});
 
 module.exports = router;

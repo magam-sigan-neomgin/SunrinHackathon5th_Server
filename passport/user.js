@@ -162,3 +162,6 @@ module.exports.getUserById = (id, cb) => {
     cb(results[0]);
   });
 }
+module.exports.addUnlike = (id, userId) => {
+  pool.query('DELETE FROM board WHERE id = ? AND user_id = ?', [id, userId]);
+}
