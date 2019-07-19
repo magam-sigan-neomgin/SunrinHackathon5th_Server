@@ -18,15 +18,6 @@ router.get('/', (req, res) => {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/signin', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.status(res.statusCode).json({'isAuthenticated': req.isAuthenticated(), 'id': req.user['id']});
-  }
-  else {
-    res.sendFile('signIn.html', { root: path.join(__dirname, '../public/html') })
-  }
-});
-
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/status',
   failureRedirect: '/status'
@@ -48,13 +39,11 @@ router.post('/idcheck', (req, res) => {
   });
 });
 
-router.get('/register', (req, res) => {
-   res.sendFile('signUp.html', { root: path.join(__dirname, '../public/html') });
-});
-
-router.post('/register', (req, res) => {
+router.post('/register', upload.single('profileimage'), (req, res) => {
   Users.findIdById(req.body['id'], (results) => {
     if (results.length == 0) {
+      let photoName = req.body['id'] + '.' + req.file.originalname.split('.').pop();
+      S3.upload(photoName, req.file['buffer']);
       bcyrpt.hash(req.body['pw'], bcryptSettings.saltRounds, (err, hash) => {
         Users.signUp(req.body['id'], hash, req.body['username'], () => {
           res.json({'status': true});
