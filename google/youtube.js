@@ -1,6 +1,10 @@
 const request = require('request');
 const GOOGLE_API = require('./google.json')
 
+// key spare
+// AIzaSyCfl5v33F5hAH7-KcSiGDFloBCtj8dFjXg
+// AIzaSyBepOzk_CjnbBeNoOvmaSRfoJColfSwIYI
+
 var exports = module.exports = {};
 
 module.exports.getVideoByEmotion = (emotion) => {
@@ -13,14 +17,14 @@ module.exports.getVideoByEmotion = (emotion) => {
             });
         }
         else if (emotion == 'happy') {
-            let options = { uri: 'https://www.googleapis.com/youtube/v3/search', qs: {key: GOOGLE_API.key, part: 'snippet', q: '행복한노래'} };
+            let options = { uri: 'https://www.googleapis.com/youtube/v3/search', qs: {key: GOOGLE_API.key, part: 'snippet', q: '신나는노래'} };
             request(options, (error, response, body) => {
                 if (error) throw error;
                 resolve(JSON.parse(body));
             });
         }
         else if (emotion == 'soso') {
-            let options = { uri: 'https://www.googleapis.com/youtube/v3/search', qs: {key: GOOGLE_API.key, part: 'snippet', q: '평범한노래'} };
+            let options = { uri: 'https://www.googleapis.com/youtube/v3/search', qs: {key: GOOGLE_API.key, part: 'snippet', q: '잔잔한노래'} };
             request(options, (error, response, body) => {
                 if (error) throw error;
                 resolve(JSON.parse(body));
