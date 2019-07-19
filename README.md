@@ -132,7 +132,19 @@
                     "user_id": "testId2"
                 }
             ],
-            "suggest": {"youtube api"}
+            "suggest": {"youtube api"},
+            "comment": [
+                {
+                    "id": 2,
+                    "comment": "hello",
+                    "author": "UserA"
+                },
+                {
+                    "id": 2,
+                    "comment": "hi",
+                    "author": "UserB"
+                }
+            ]
         },
         {
             "id": 2,
@@ -140,7 +152,19 @@
             "photo": "testPhoto2.png",
             "likes": [],
             "is_shared": 1,
-            "suggest": {"youtube api"}
+            "suggest": {"youtube api"},
+            "comment": [
+                {
+                    "id": 2,
+                    "comment": "hello",
+                    "author": "UserA"
+                },
+                {
+                    "id": 2,
+                    "comment": "hi",
+                    "author": "UserB"
+                }
+            ]
         }
     ]
 }
@@ -215,14 +239,38 @@
                     "user_id": "testId2"
                 }
             ],
-            "suggest": {"youtube api"}
+            "suggest": {"youtube api"},
+            "comment": [
+                {
+                    "id": 2,
+                    "comment": "hello",
+                    "author": "UserA"
+                },
+                {
+                    "id": 2,
+                    "comment": "hi",
+                    "author": "UserB"
+                }
+            ]
         },
         {
             "id": 2,
             "content": "test content2",
             "photo": "testPhoto2.png",
             "likes": [],
-            "suggest": {"youtube api"}
+            "suggest": {"youtube api"},
+            "comment": [
+                {
+                    "id": 2,
+                    "comment": "hello",
+                    "author": "UserA"
+                },
+                {
+                    "id": 2,
+                    "comment": "hi",
+                    "author": "UserB"
+                }
+            ]
         }
     ]
 }
