@@ -139,7 +139,10 @@ router.post('/board/add', upload.single('photo'), (req, res) => {
     Users.getLastBoardNo((id) => {
       let photoName = id + '.' + req.file.originalname.split('.').pop();
       S3.uploadBoardPhoto(photoName, req.file['buffer']);
-      Users.addBoard(id, req.body['title'], req.body['content'], photoName, req.body['emotion'], req.user.id);
+      let date = new Date();
+      date.setHours(date.getHours() + 9);
+      date = date.toISOString().slice(0, 19).replace('T', ' ');
+      Users.addBoard(id, req.body['title'], req.body['content'], photoName, req.body['emotion'], req.user.id, date);
       res.json({'status': true});
     });
   }
