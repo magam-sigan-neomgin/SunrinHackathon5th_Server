@@ -165,3 +165,9 @@ module.exports.getUserById = (id, cb) => {
 module.exports.addUnlike = (id, userId) => {
   pool.query('DELETE FROM board WHERE id = ? AND user_id = ?', [id, userId]);
 }
+module.exports.idToUsername = (id, cb) => {
+  pool.query('SELECT username FROM user WHERE id = ?', [id], (error, results, fields) => {
+    if (error) throw error;
+    cb(results[0]);
+  });
+}

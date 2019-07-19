@@ -442,3 +442,28 @@
     "message": "Authenticated failed"
 }
 ``` 
+
+## ID to Username 
+
+**URL** : `/id/to/username` 
+
+**Method** : `GET` 
+
+**Auth required** : NO 
+
+**Request body example** 
+
+```json
+{
+    "id": "testID"
+}
+``` 
+
+**Succeeded Response example** 
+
+```json
+{
+    "status": true,
+    "username": "testUsername"
+}
+``` 

@@ -192,5 +192,10 @@ router.get('/board/unlike', (req, res) => {
     res.json({'status': false, 'message': 'Authenticated failed'});
   }
 });
+router.get('/id/to/username', (req, res) => {
+  Users.idToUsername(req.query['id'], ((result) => {
+    res.json({'status': true, 'username': result});
+  }));
+});
 
 module.exports = router;
