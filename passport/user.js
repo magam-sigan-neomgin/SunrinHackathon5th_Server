@@ -117,7 +117,7 @@ module.exports.getBoard = (cb) => {
   });
 }
 module.exports.addBoard = (id, title, content, photo, emotion, author) => {
-  pool.query('INSERT INTO board VALUES (?, ?, ?, ?, ?, ?)', [id, title, content, photo, emotion, author], (error, results, fields) => {
+  pool.query('INSERT INTO board VALUES (?, ?, ?, ?, ?, ?, FALSE)', [id, title, content, photo, emotion, author], (error, results, fields) => {
     if (error) throw error;
   });
 }
@@ -141,4 +141,7 @@ module.exports.getBoardById = (author)  => {
       resolve(results);
     })
   });
+}
+module.exports.updateShare = (id) => {
+  pool.query('UPDATE board SET is_shared = 1 WHERE id = ?', [id]);
 }

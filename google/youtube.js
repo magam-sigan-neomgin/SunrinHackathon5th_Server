@@ -5,7 +5,7 @@ var exports = module.exports = {};
 
 module.exports.getVideoByEmotion = (emotion) => {
     return new Promise((resolve, reject) => {
-        if (emotion == '슬퍼요') {
+        if (emotion == 'sad') {
             let options = { uri: 'https://www.googleapis.com/youtube/v3/search', qs: {key: GOOGLE_API.key, part: 'snippet', q: '슬픈노래'} };
             request(options, (error, response, body) => {
                 resolve(JSON.parse(body));

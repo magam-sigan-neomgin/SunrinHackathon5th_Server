@@ -121,6 +121,7 @@
             "content": "test content",
             "photo": "testPhoto.jpg",
             "author": "UserA",
+            "is_shared": 0,
             "likes": [
                 {
                     "id": 1,
@@ -138,6 +139,7 @@
             "content": "test content2",
             "photo": "testPhoto2.png",
             "likes": [],
+            "is_shared": 1,
             "suggest": {"youtube api"}
         }
     ]
@@ -161,7 +163,7 @@
     "title": "testTitle",
     "content": "testContent",
     "photo": "[multipart/formdata]",
-    "emotion": "[슬퍼요/...]"
+    "emotion": "[sad/...]"
 }
 ``` 
 
@@ -233,5 +235,29 @@
 {
     "status": false,
     "message": "Authenticated failed"
+}
+``` 
+
+## Board Share 
+
+**URL** : `/board/share` 
+
+**Method** : `POST` 
+
+**Auth required** : NO 
+
+**Request body example** 
+
+```json
+{
+    "id": "1"
+}
+``` 
+
+**Succeeded Response example** 
+
+```json
+{
+    "status": true
 }
 ``` 

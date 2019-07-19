@@ -71,6 +71,9 @@ router.get('/board', (req, res) => {
   let promiseArr1 = [];
   let promiseArr2 = [];
   Users.getBoard((results) => {
+    results = results.filter((value) => {
+      return value['is_shared'];
+    })
     results.map((value) => {
       promiseArr1.push(Users.getLike(value['id']));
       promiseArr2.push(Youtube.getVideoByEmotion(value['emotion']));
@@ -139,6 +142,11 @@ router.post('/board/like', (req, res) => {
   else {
     res.json({'status': false, 'message': 'Authenticated failed'});
   }
+});
+
+router.post('/board/share', (req, res) => {
+  Users.updateShare(req.body['id']);
+  res.json({'status': true});
 });
 
 module.exports = router;
