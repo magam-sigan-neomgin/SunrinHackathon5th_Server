@@ -116,8 +116,8 @@ module.exports.getBoard = (cb) => {
     cb(results);
   });
 }
-module.exports.addBoard = (id, title, content, photo) => {
-  pool.query('INSERT INTO board VALUES (?, ?, ?, ?)', [id, title, content, photo], (error, results, fields) => {
+module.exports.addBoard = (id, title, content, photo, emotion) => {
+  pool.query('INSERT INTO board VALUES (?, ?, ?, ?, ?)', [id, title, content, photo, emotion], (error, results, fields) => {
     if (error) throw error;
   });
 }

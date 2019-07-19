@@ -3,6 +3,15 @@ const GOOGLE_API = require('./google.json')
 
 var exports = module.exports = {};
 
+module.exports.getSadVideos = () => {
+    return new Promise((resolve, reject) => {
+        let options = { uri: 'https://www.googleapis.com/youtube/v3/search', qs: {key: GOOGLE_API.key, part: 'snippet', q: '슬픈노래'} };
+        request(options, (error, response, body) => {
+            resolve(JSON.parse(body));
+        });
+    });
+}
+
 module.exports.getAsmrWithPage = (page) => {
     return new Promise((resolve, reject) => {
         getAsmr(page, 1, null).then((bodyObject) => {

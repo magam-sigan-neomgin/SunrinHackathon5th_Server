@@ -88,7 +88,7 @@ router.post('/board/add', upload.single('photo'), (req, res) => {
     Users.getLastBoardNo((id) => {
       let photoName = id + '.' + req.file.originalname.split('.').pop();
       S3.uploadBoardPhoto(photoName, req.file['buffer']);
-      Users.addBoard(id, req.body['title'], req.body['content'], photoName);
+      Users.addBoard(id, req.body['title'], req.body['content'], photoName, req.body['emotion']);
       res.json({'status': true});
     });
   }
@@ -104,6 +104,23 @@ router.post('/board/like', (req, res) => {
   }
   else {
     res.json({'status': false, 'message': 'Authenticated failed'});
+  }
+});
+
+router.get('/song/suggest', (req, res) => {
+  if (req.query['mood'] == '슬퍼요') {
+    Youtube.getSadVideos().then((result) => {
+      res.json(result);
+    });
+  }
+  else if (req.query['mood'] == '짜증나요') {
+
+  }
+  else if (req.query['mood'] == '기뻐요') {
+    
+  }
+  else if (req.query['mood'] == '재밌어요') {
+    
   }
 });
 
