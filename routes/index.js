@@ -39,7 +39,7 @@ router.post('/idcheck', (req, res) => {
   });
 });
 
-router.post('/register', upload.single('profileimage'), (req, res) => {
+router.post('/register', upload.single('photo'), (req, res) => {
   Users.findIdById(req.body['id'], (results) => {
     if (results.length == 0) {
       let photoName = req.body['id'] + '.' + req.file.originalname.split('.').pop();

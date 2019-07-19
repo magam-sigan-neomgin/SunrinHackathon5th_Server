@@ -19,7 +19,7 @@
     "id": "testId",
     "pw": "testPw",
     "username": "testUserName",
-    "profileimage": "[multipart/formdata]"
+    "photo": "[multipart/formdata]"
 }
 ``` 
 
