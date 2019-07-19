@@ -51,8 +51,8 @@ module.exports.findPw = (id, pw, cb) => {
   });
 };
 
-module.exports.signUp = (id, pw, userName, photoName, cb) => {
-  pool.query('INSERT INTO user VALUES (?, ?, ?, ?)', [id, pw, userName, photoName], (error, results, fields) => {
+module.exports.signUp = (id, pw, userName, cb) => {
+  pool.query('INSERT INTO user VALUES (?, ?, ?)', [id, pw, userName], (error, results, fields) => {
     // sql error
     if (error) throw error;
     cb();
@@ -89,38 +89,8 @@ module.exports.getLastBoardNo = (cb) => {
   });
 }
 
-module.exports.insertBoard = (no, id, title, date, bodyText, photo) => {
-  pool.query('INSERT INTO board VALUES (?, ?, ?, ?, ?, ?)', [no, id, title, date, bodyText, photo]);
-};
-
-module.exports.getBoards = (cb) => {
-  pool.query('SELECT * FROM board ORDER BY no DESC', (error, results, fields) => {
-    // sql error
-    if (error) throw error;
-    cb(results);
-  });
-}
-
-module.exports.getLike = (no) => {
-  return new Promise((resolve, reject) => {
-    pool.query('SELECT id FROM board_like WHERE no = ?', [no], (error, results, fields) => {
-      // sql error
-      if (error) throw error;
-      resolve(results);
-    });
-  });
-}
-
-module.exports.clickLike = (no, id) => {
-  pool.query('INSERT INTO board_like VALUES (?, ?)', [no, id]);
-}
-
-module.exports.unClickLike = (no, id) => {
-  pool.query('DELETE FROM board_like WHERE no = ? AND id = ?', [no, id]);
-}
-
 module.exports.getUser = (id, cb) => {
-  pool.query('SELECT username, photo FROM user WHERE id = ?', [id], (error, results, fields) => {
+  pool.query('SELECT username FROM user WHERE id = ?', [id], (error, results, fields) => {
     // sql error
     if (error) throw error;
     cb(results[0]);

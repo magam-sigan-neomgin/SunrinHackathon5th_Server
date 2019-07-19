@@ -13,30 +13,6 @@ const bcryptSettings = {
   saltRounds: 10
 };
 
-function getTimeStamp() {
-  var d = new Date();
-  var s =
-    leadingZeros(d.getFullYear(), 4) + '-' +
-    leadingZeros(d.getMonth() + 1, 2) + '-' +
-    leadingZeros(d.getDate(), 2) + ' ' +
-
-    leadingZeros(d.getHours(), 2) + ':' +
-    leadingZeros(d.getMinutes(), 2) + ':' +
-    leadingZeros(d.getSeconds(), 2);
-
-  return s;
-}
-function leadingZeros(n, digits) {
-  var zero = '';
-  n = n.toString();
-
-  if (n.length < digits) {
-    for (i = 0; i < digits - n.length; i++)
-      zero += '0';
-  }
-  return zero + n;
-}
-
 /* GET home page. */
 router.get('/', (req, res) => {
   res.render('index', { title: 'Express' });
@@ -76,11 +52,9 @@ router.get('/register', (req, res) => {
    res.sendFile('signUp.html', { root: path.join(__dirname, '../public/html') });
 });
 
-router.post('/register', upload.single('profileimage'), (req, res) => {
-  let photoName = req.body['id'] + '.' + req.file.originalname.split('.').pop();
-  S3.upload(photoName, req.file['buffer']);
+router.post('/register', (req, res) => {
   bcyrpt.hash(req.body['pw'], bcryptSettings.saltRounds, (err, hash) => {
-    Users.signUp(req.body['id'], hash, req.body['username'], photoName, () => {
+    Users.signUp(req.body['id'], hash, req.body['username'], () => {
       res.json({'status': true});
     });
   });
@@ -89,116 +63,12 @@ router.post('/register', upload.single('profileimage'), (req, res) => {
 router.get('/status', (req, res) => {
   if (req.isAuthenticated()) {
     Users.getUser(req.user['id'], (results) => {
-      res.json({'status': req.isAuthenticated(), 'id': req.user['id'], 'username': results['username'], 'photo': results['photo']});
+      res.json({'status': req.isAuthenticated(), 'id': req.user['id'], 'username': results['username']});
     });
   }
   else {
     res.json({'status': req.isAuthenticated(), 'message': "Authenticated failed"})
   }
-});
-
-router.post('/writeboard', upload.single('photo'), (req, res) => {
-  if (req.isAuthenticated()) {
-    let id = req.user['id'];
-    let title = req.body['title'];
-    let date = getTimeStamp()
-    let photo = req.file['buffer'];
-    let bodyText = req.body['bodyText'];
-    Users.getLastBoardNo((lastNo) => {
-      S3.uploadBoardPhoto(lastNo + '.' + req.file.originalname.split('.').pop(), photo);
-      Users.insertBoard(lastNo, id, title, date, bodyText, lastNo + '.' + req.file.originalname.split('.').pop());
-      res.json({'status': true});
-    });
-  }
-  else {
-    res.json({'status': false, 'message': 'Authenticated failed'});
-  }
-});
-
-router.get('/getboards', (req, res) => {
-  Users.getBoards((results) => {
-    let promiseArr = [];
-    results.map((value) => {
-      promiseArr.push(Users.getLike(value['no']));
-      return value;
-    });
-    Promise.all(promiseArr).then((value) => {
-      value.map((likeValues, index) => {
-        results[index]['likes'] = [];
-        value[index].map((likeValue) => {
-          results[index]['likes'].push(likeValue['id']);
-        });
-      });
-      res.json({'status': true, 'data': results});
-    });
-  });
-});
-
-router.post('/clicklike', (req, res) => {
-  if (req.isAuthenticated()) {
-    let no = req.body['no'];
-    console.log(req.body);
-    Users.clickLike(no, req.user['id'])
-    res.json({'status': true});
-  }
-  else {
-    res.json({'status': false, 'message': 'Authenticated failed'});
-  }
-});
-
-router.post('/unclicklike', (req, res) => {
-  if (req.isAuthenticated()) {
-    let no = req.body['no'];
-    console.log(no, req.user['id']);
-    Users.unClickLike(no, req.user['id']);
-    res.json({'status': true});
-  }
-  else {
-    res.json({'status': false, 'message': 'Authenticated failed'});
-  }
-});
-
-router.get('/getasmr', (req, res) => {
-  if (req.query['token']) {
-    Youtube.getAsmrWithToken(req.query['token']).then((bodyObject) => {
-      res.json({'status': true, 'data': bodyObject});
-    });
-  }
-  else if (req.query['page']) {
-    Youtube.getAsmrWithPage(req.query['page']).then((bodyObject) => {
-      res.json({'status': true, 'data': bodyObject});
-    })
-  }
-  else {
-    res.json({'status': false, 'message': 'Token and page both not found'});
-  }
-});
-
-router.get('/getwhitenoise', (req, res) => {
-  if (req.query['token']) {
-    Youtube.getWhiteNoiseWithToken(req.query['token']).then((bodyObject) => {
-      res.json({'status': true, 'data': bodyObject});
-    });
-  }
-  else if (req.query['page']) {
-    Youtube.getWhiteNoiseWithPage(req.query['page']).then((bodyObject) => {
-      res.json({'status': true, 'data': bodyObject});
-    })
-  }
-  else {
-    res.json({'status': false, 'message': 'Token and page both not found'});
-  }
-});
-
-router.get('/getuser', (req, res) => {
-  Users.getUser(req.query['id'], (results) => {
-    if (results != undefined) {
-      res.json({'status': true, 'id': req.query['id'], 'username': results['username'], 'photo': results['photo']});
-    }
-    else {
-      res.json({'status': false, 'message': 'Cant find user'});
-    }
-  })
 });
 
 module.exports = router;
