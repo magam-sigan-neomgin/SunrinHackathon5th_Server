@@ -54,12 +54,16 @@ router.get('/register', (req, res) => {
 
 router.post('/register', (req, res) => {
   Users.findIdById(req.body['id'], (results) => {
-    console.log(results);
-  });
-  bcyrpt.hash(req.body['pw'], bcryptSettings.saltRounds, (err, hash) => {
-    Users.signUp(req.body['id'], hash, req.body['username'], () => {
-      res.json({'status': true});
-    });
+    if (results.length == 0) {
+      res.json({'status': false, 'message': 'Id duplicated'});
+    }
+    else {
+      bcyrpt.hash(req.body['pw'], bcryptSettings.saltRounds, (err, hash) => {
+        Users.signUp(req.body['id'], hash, req.body['username'], () => {
+          res.json({'status': true});
+        });
+      });
+    }
   });
 });
 
