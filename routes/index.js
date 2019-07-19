@@ -92,7 +92,7 @@ router.post('/board/add', upload.single('photo'), (req, res) => {
       console.log(id, req.body['title'], req.body['content'], photoName);
       S3.uploadBoardPhoto(photoName, req.file['buffer']);
       Users.addBoard(id, req.body['title'], req.body['content'], photoName);
-      res.json({'status': true});
+      res.json({'status': false});
     });
   }
   else {
