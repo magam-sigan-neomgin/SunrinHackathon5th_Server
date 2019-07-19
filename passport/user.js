@@ -116,10 +116,21 @@ module.exports.getBoard = (cb) => {
     cb(results);
   });
 }
-module.exports.addBoard = (id, content, photo, like) => {
-  pool.query('INSERT INTO board VALUES (?, ?, ?, ?)', [id, content, photo, like], (error, results, fields) => {
+module.exports.addBoard = (id, title, content, photo, like) => {
+  pool.query('INSERT INTO board VALUES (?, ?, ?, ?, ?)', [id, title, content, photo, like], (error, results, fields) => {
     if (error) throw error;
-    console.log(results);
-    console.log(fields);
   });
 }
+module.exports.addLike = (id, userId) => {
+  pool.query('INSERT INTO board_like VALUES (?, ?)', [id, userId], (error, results, fields) => {
+    if (error) throw error;
+  });
+};
+module.exports.getLike = (id) => {
+  return new Promise((resolve, reject) => {
+    pool.query('SELECT * FROM board_like where id = ?', [id], (error, results, fields) => {
+      if (error) throw error;
+      resolve(results);
+    });
+  });
+};

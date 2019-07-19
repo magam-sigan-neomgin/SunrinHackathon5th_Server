@@ -117,15 +117,25 @@
     "board": [
         {
             "id": 1,
+            "title": "testTitle",
             "content": "test content",
-            "photo": "testPhoto",
-            "likes": 1
+            "photo": "testPhoto.jpg",
+            "likes": [
+                {
+                    "id": 1,
+                    "user_id": "testId"
+                },
+                {
+                    "id": 2,
+                    "user_id": "testId2"
+                }
+            ]
         },
         {
             "id": 2,
             "content": "test content2",
-            "photo": "testPhoto2",
-            "likes": 2
+            "photo": "testPhoto2.png",
+            "likes": []
         }
     ]
 }
@@ -145,8 +155,9 @@
 
 ```json
 {
+    "title": "testTitle",
     "content": "testContent",
-    "boardimage": "[multipart/formdata]"
+    "photo": "[multipart/formdata]"
 }
 ``` 
 

@@ -68,19 +68,39 @@ router.get('/status', (req, res) => {
 });
 
 router.get('/board', (req, res) => {
+  let promiseArr = [];
   Users.getBoard((results) => {
-    res.json({'status': true, 'board': results});
+    results.map((value) => {
+      promiseArr.push(Users.getLike(value['id']));
+      return value;
+    });
+    Promise.all(promiseArr).then((values) => {
+      values.forEach((value, index) => {
+        results[index]['likes'] = value;
+      });
+      res.json({'status': true, 'board': results});
+    });
   });
 });
 
-router.post('/board/add', upload.single('boardimage'), (req, res) => {
+router.post('/board/add', upload.single('photo'), (req, res) => {
   if (req.isAuthenticated()) {
     Users.getLastBoardNo((id) => {
       let photoName = id + '.' + req.file.originalname.split('.').pop();
       S3.uploadBoardPhoto(photoName, req.file['buffer']);
-      Users.addBoard(id, req.body['content'], photoName, 0);
+      Users.addBoard(id, req.body['title'], req.body['content'], photoName, 0);
       res.json({'status': true});
     });
+  }
+  else {
+    res.json({'status': false, 'message': 'Authenticated failed'});
+  }
+});
+
+router.post('/board/like', (req, res) => {
+  if (req.isAuthenticated()) {
+    Users.addLike(req.body['id'], req.user.username);
+    res.json({'status': true});
   }
   else {
     res.json({'status': false, 'message': 'Authenticated failed'});
