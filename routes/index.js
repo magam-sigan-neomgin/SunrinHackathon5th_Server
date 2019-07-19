@@ -84,12 +84,9 @@ router.get('/board', (req, res) => {
 });
 
 router.post('/board/add', upload.single('photo'), (req, res) => {
-  console.log(req.body['title'], req.body['content'], req.isAuthenticated());
   if (req.isAuthenticated()) {
-    console.log(req.body['title'], req.body['content'], photoName);
     Users.getLastBoardNo((id) => {
       let photoName = id + '.' + req.file.originalname.split('.').pop();
-      console.log(id, req.body['title'], req.body['content'], photoName);
       S3.uploadBoardPhoto(photoName, req.file['buffer']);
       Users.addBoard(id, req.body['title'], req.body['content'], photoName);
       res.json({'status': true});
