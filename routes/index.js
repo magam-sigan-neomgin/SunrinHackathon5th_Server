@@ -84,7 +84,7 @@ router.get('/board', (req, res) => {
 });
 
 router.post('/board/add', upload.single('photo'), (req, res) => {
-  console.log(req.body['title'], req.body['content']);
+  console.log(req.body['title'], req.body['content'], req.isAuthenticated());
   if (req.isAuthenticated()) {
     console.log(req.body['title'], req.body['content'], photoName);
     Users.getLastBoardNo((id) => {
