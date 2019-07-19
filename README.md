@@ -30,6 +30,15 @@
 }
 ``` 
 
+**Failed Response example** 
+
+```json
+{
+    "status": false,
+    "message": "Id duplicated"
+}
+``` 
+
 ## Login Account 
 
 **URL** : `/login` 
