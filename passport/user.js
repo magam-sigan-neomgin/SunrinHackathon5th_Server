@@ -51,8 +51,8 @@ module.exports.findPw = (id, pw, cb) => {
   });
 };
 
-module.exports.signUp = (id, pw, userName, cb) => {
-  pool.query('INSERT INTO user VALUES (?, ?, ?)', [id, pw, userName], (error, results, fields) => {
+module.exports.signUp = (id, pw, userName, imageName, cb) => {
+  pool.query('INSERT INTO user VALUES (?, ?, ?, ?)', [id, pw, userName, imageName], (error, results, fields) => {
     // sql error
     if (error) throw error;
     cb();
@@ -154,5 +154,11 @@ module.exports.getComment = (id) => {
       if (error) throw error;
       resolve(results);
     });
+  });
+}
+module.exports.getUserById = (id, cb) => {
+  pool.query('SELECT id, username, image FROM user WHERE id = ?', [id], (error, results, fields) => {
+    if (error) throw error;
+    cb(results[0]);
   });
 }

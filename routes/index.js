@@ -45,7 +45,7 @@ router.post('/register', upload.single('photo'), (req, res) => {
       let photoName = req.body['id'] + '.' + req.file.originalname.split('.').pop();
       S3.upload(photoName, req.file['buffer']);
       bcyrpt.hash(req.body['pw'], bcryptSettings.saltRounds, (err, hash) => {
-        Users.signUp(req.body['id'], hash, req.body['username'], () => {
+        Users.signUp(req.body['id'], hash, req.body['username'], photoName, () => {
           res.json({'status': true});
         });
       });
@@ -104,7 +104,7 @@ router.get('/board/my', (req, res) => {
     let promiseArr1 = [];
     let promiseArr2 = [];
     let promiseArr3 = [];
-    Users.getBoardById(req.user.username).then((results) => {
+    Users.getBoardById(req.user.id).then((results) => {
       results.map((value) => {
         promiseArr1.push(Users.getLike(value['id']));
         promiseArr2.push(Youtube.getVideoByEmotion(value['emotion']));
@@ -139,7 +139,7 @@ router.post('/board/add', upload.single('photo'), (req, res) => {
     Users.getLastBoardNo((id) => {
       let photoName = id + '.' + req.file.originalname.split('.').pop();
       S3.uploadBoardPhoto(photoName, req.file['buffer']);
-      Users.addBoard(id, req.body['title'], req.body['content'], photoName, req.body['emotion'], req.user.username);
+      Users.addBoard(id, req.body['title'], req.body['content'], photoName, req.body['emotion'], req.user.id);
       res.json({'status': true});
     });
   }
@@ -150,7 +150,7 @@ router.post('/board/add', upload.single('photo'), (req, res) => {
 
 router.post('/board/like', (req, res) => {
   if (req.isAuthenticated()) {
-    Users.addLike(req.body['id'], req.user.username);
+    Users.addLike(req.body['id'], req.user.id);
     res.json({'status': true});
   }
   else {
@@ -163,8 +163,18 @@ router.post('/board/share', (req, res) => {
 });
 router.post('/board/comment', (req, res) => {
   if (req.isAuthenticated()) {
-    Users.addComment(req.body['id'], req.body['comment'], req.user.username);
+    Users.addComment(req.body['id'], req.body['comment'], req.user.id);
     res.json({'status': true});
+  }
+  else {
+    res.json({'status': false, 'message': 'Authenticated failed'});
+  }
+});
+router.get('/profile', (req, res) => {
+  if (req.isAuthenticated()) {
+    Users.getUserById(req.user.id, ((result) => {
+      res.json({'status': true, 'profile': result});
+    }));
   }
   else {
     res.json({'status': false, 'message': 'Authenticated failed'});

@@ -344,3 +344,35 @@
     "message": "Authenticated failed"
 }
 ``` 
+
+## Get Profile 
+
+**URL** : `/profile` 
+
+**Method** : `GET` 
+
+**Auth required** : YES 
+
+**Succeeded Response example** 
+
+```json
+{
+    "status": true,
+    "profile": {
+        "id": "testId",
+        "username": "testUserName",
+        "image": "testImage"
+    }
+}
+``` 
+
+>> image는 https://good-night-image-bucket.s3.ap-northeast-2.amazonaws.com/ 뒤에 붙인다. 
+
+**Failed Response example** 
+
+```json
+{
+    "status": false,
+    "message": "Authenticated failed"
+}
+``` 
